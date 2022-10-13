@@ -1,0 +1,19 @@
+.nav{   
+    --bs-nav-link-padding-x: 1rem;
+    --bs-nav-link-padding-y: 0.9rem;
+    --bs-nav-link-font-weight: ;
+    --bs-nav-link-color: var(--bs-link-color);
+    --bs-nav-link-hover-color: var(--bs-link-hover-color);
+    --bs-nav-link-disabled-color: #6c757d;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.btn{
+    width: 10rem;
+    border: none;
+    border-radius: 1.3rem;
+    background: #00AAE4;
+}
