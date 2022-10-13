@@ -7,6 +7,8 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 
+import { HttpClientModule } from  '@angular/common/http'
+import {FormsModule } from '@angular/forms'
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +18,9 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

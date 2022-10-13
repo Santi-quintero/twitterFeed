@@ -8,10 +8,15 @@ input{
 }
 .d-flex{
     width: 100%;
-    height: 750px;
+    height: 400px;
     margin-top: 10px;
     border-radius: 1.5rem;
 }
 h4{
     border-bottom: 1px solid #e9ecef;
+}
+.characters{
+    display: flex;
+    height: 50px;
+    border-bottom: 1px solid #e9e9e9;
 }

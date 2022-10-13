@@ -10,6 +10,16 @@
 >
 
 <h4>Trends</h4>
+<div class="characters" *ngFor="let character of characters.slice(0,7)">
+<img
+                src={{character.image}}
+                alt
+                width="32"
+                height="32"
+                class="rounded-circle me-2"
+            >
+            <strong >{{character.name}}</strong>
+        </div>
 </div> 
 
 </div>
