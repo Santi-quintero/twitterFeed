@@ -1,25 +1,29 @@
 <div style="width: 300px; height: 850px; margin-left: 10px;">
     <form>
         <input
-            type="search"
+            type="text"
+            id="search"
+            #character
+            (keyup)="searchCharacters(character.value)"
             placeholder="Search characters"
         >
     </form>
-     <div
-    class="d-flex flex-column flex-shrink-0 p-3 bg-light"
->
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
 
-<h4>Trends</h4>
-<div class="characters" *ngFor="let character of characters.slice(0,7)">
-<img
+        <h4>Trends</h4>
+        <div
+            class="characters"
+            *ngFor="let character of characters.slice(0,7)"
+        >
+            <img
                 src={{character.image}}
                 alt
                 width="32"
                 height="32"
                 class="rounded-circle me-2"
             >
-            <strong >{{character.name}}</strong>
+            <strong>{{character.name}}</strong>
         </div>
-</div> 
+    </div>
 
 </div>

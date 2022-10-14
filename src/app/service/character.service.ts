@@ -10,6 +10,7 @@ import { Character } from '../models/character';
 export class CharacterService {
 
   URL = environment.URLCharacters;
+
   constructor(private httpClient: HttpClient) { }
 
 
@@ -17,4 +18,8 @@ export class CharacterService {
     return this.httpClient.get<any>(this.URL)
 
   }
+
+  public search(name : string): Observable<any>{
+    return this.httpClient.get<any>(`${this.URL}?name=${name}`)
+    }
 }
