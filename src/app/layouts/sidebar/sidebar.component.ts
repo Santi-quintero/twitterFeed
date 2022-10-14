@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Character } from 'src/app/models/character';
 import { CharacterService } from 'src/app/service/character.service';
-
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -11,9 +11,11 @@ import { CharacterService } from 'src/app/service/character.service';
 export class SidebarComponent implements OnInit {
 
   characters!: Character[];
+  details!: Character;
+
   constructor(
     private characterService: CharacterService,
-    private activateRouter: ActivatedRoute
+    private modal:NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -42,5 +44,17 @@ export class SidebarComponent implements OnInit {
      )
 
   }
+  detailCharacter(contenido: any, id: number){
+    this.modal.open(contenido,{size:'xl'});
+    this.characterService.detail(id).subscribe(
+      data=>{
+        this.details = data
+      },err=>{
+        console.log(err.message)
+      }
+    )
+  }
+
+
 
 }

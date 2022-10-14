@@ -17,13 +17,66 @@
         >
             <img
                 src={{character.image}}
+                (click)="detailCharacter(contenido, character.id) "
                 alt
                 width="32"
                 height="32"
                 class="rounded-circle me-2"
+                style="cursor: pointer;"
             >
-            <strong>{{character.name}}</strong>
+            <strong
+                (click)="detailCharacter(contenido, character.id) "
+                style="cursor: pointer;"
+            >
+                {{character.name}}
+            </strong>
         </div>
     </div>
 
 </div>
+
+<ng-template
+    #contenido
+    let-modal
+>
+    <div class="modal-header">
+        <h4 class="modal-title">{{details.name}}</h4>
+        <button
+            class="close"
+            aria-label="close"
+            type="button"
+            (click)="modal.dismiss()"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <img
+            src={{details.image}}
+            width="32%"
+            height="32%"
+            class="rounded-circle me-2"
+        >
+        <div class="div">
+            <h3>features</h3>
+            <ul>
+                <li>status: {{details.status}}</li>
+                <li>species: {{details.species}}</li>
+                <li *ngIf="details.type">type: {{details.type}}</li>
+                <li>gender: {{details.gender}}</li>
+                <li>url: {{details.url}}</li>
+                <li>created: {{details.created}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <button
+            type="button"
+            class="btn btn-success"
+            (click)="modal.close()"
+        >
+            Ok!
+        </button>
+    </div>
+</ng-template>

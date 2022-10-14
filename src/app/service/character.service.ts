@@ -22,4 +22,8 @@ export class CharacterService {
   public search(name : string): Observable<any>{
     return this.httpClient.get<any>(`${this.URL}?name=${name}`)
     }
+
+  public detail(id: number): Observable<Character>{
+    return this.httpClient.get<Character>(`${this.URL}/${id}`)
+  }
 }
