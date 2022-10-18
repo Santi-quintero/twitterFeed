@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  tweets: any[]=[];
+  tweet:any={};
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  guardar(){
+    this.tweets.push(this.tweet)
+    this.tweet={}
+    console.log(this.tweets)
+    console.log(this.tweet)
+  }
 }

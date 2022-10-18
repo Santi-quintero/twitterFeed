@@ -16,7 +16,9 @@ export class SidebarComponent implements OnInit {
   constructor(
     private characterService: CharacterService,
     private modal:NgbModal
-  ) { }
+  ) {
+    this.characters=[]
+   }
 
   ngOnInit(): void {
     this.cargarCharacters();

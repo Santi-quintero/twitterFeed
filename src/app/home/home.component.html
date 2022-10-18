@@ -5,7 +5,7 @@
             style="width: 550px; height: 850px; margin-left: 10px; border:1px solid rgb(246, 239, 239);"
         >
             
-        <div class="home">
+        <div class="home" >
             <div class="name">
                 <h3>Home</h3>
             </div>
@@ -18,14 +18,31 @@
                     class="rounded-circle me-2"
                 >
                 <form >
-                    <input size="38" style="width: 24rem; border:none;" placeholder="What´s hapenning?">
+                    <input size="38" style="width: 24rem; border:none;" placeholder="What´s hapenning?"
+                    type="text" name="tweet" [(ngModel)]="tweet.tweet">
                 </form>
             </div>
             <div class="options">
-                <button class="btn btn-primary">Tweet</button>
+                <button class="btn btn-primary" value="guardar" (click)="guardar()">Tweet</button>
             </div>
             
         </div>
+        <div class="card"  *ngFor="let person of tweets" style="margin-bottom: 10px; margin-top: 10px;" >
+            <div class="card-header">
+                <img
+                src="https://github.com/mdo.png"
+                alt
+                width="32"
+                height="32"
+                class="rounded-circle me-2"
+            >
+            <strong>mdo</strong>
+            </div>
+            <div class="card-body">
+              <!-- <h5 class="card-title">Special title treatment</h5> -->
+              <p class="card-text">{{person.tweet}}</p>
+            </div>
+          </div>
         </div>
 
         <app-sidebar></app-sidebar>
