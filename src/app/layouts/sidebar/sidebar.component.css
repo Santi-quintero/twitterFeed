@@ -24,3 +24,21 @@ h4{
     display: flex;
     justify-content: space-evenly;
 }
+.images{
+    display: flex;
+    width: 50%;
+    /* height: 5%; */
+    flex-direction: column;
+    align-items: center;
+}
+.images img{
+    width:30%;
+    height: 60%;
+}
+.contenido{
+    width: 40%;
+    display: flex;
+    /* border: 1px solid black; */
+    flex-direction: column;
+    justify-content: space-between;
+}

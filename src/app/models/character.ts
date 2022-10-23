@@ -1,16 +1,3 @@
-
-//   export class Character {
-//      info!:    Info;
-//      results!: Result[];
-// }
-
-// export interface Info {
-//       count: number;
-//       pages: number;
-//      next:  string;
-//       prev:  null;
-//  }
-
 export interface Character {
     id:       number;
     name:     string;
@@ -18,31 +5,44 @@ export interface Character {
     species:  string;
     type:     string;
     gender:   string;
-    origin:   string;
-    location: string;
+    origin:   Origin;
+    location: Location;
     image:    string;
-    episode:  string[];
+    episode:  Episode[];
     url:      string;
-    created:  string;
+    created:  Date;
 }
-// export enum Gender {
-//     Female = "Female",
-//     Male = "Male",
-//     Unknown = "unknown",
-// }
 
-// export class Location {
-//     name!: string;
-//     url!:  string;
-// }
+export interface Episode{
+    id:       number;
+    name:     string;
+    air_date: string;
+    episode: string;
+    characters: Character[];
+    url: string;
+    created: Date;
 
-// export enum Species {
-//     Alien = "Alien",
-//     Human = "Human",
-// }
+}
 
-// export enum Status {
-//     Alive = "Alive",
-//     Dead = "Dead",
-//     Unknown = "unknown",
-// }
+export interface Origin{
+    name: string,
+    url: string
+}
+
+export interface detailOrigin{
+    id: number,
+    name: string,
+    type: string,
+    dimension: string,
+    residents: string,
+    url: string;
+    created: Date;
+}
+
+export interface CharacterList{
+    id: number;
+    image: string;
+    name: string;
+    type: string;
+    dimension: string;
+}

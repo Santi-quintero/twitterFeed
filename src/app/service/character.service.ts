@@ -26,4 +26,11 @@ export class CharacterService {
   public detail(id: number): Observable<Character>{
     return this.httpClient.get<Character>(`${this.URL}/${id}`)
   }
+
+  public detailCharacterEpisode(id:number): Observable<any>{
+    return this.httpClient.get<any>(`${this.URL}/${id}`).pipe(map(response => response.episode[0]));
+  }
+  public episodes(id:number): Observable<any>{
+    return this.httpClient.get<any>(`${this.URL}/${id}`);
+  }
 }
