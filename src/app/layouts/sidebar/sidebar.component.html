@@ -38,8 +38,9 @@
 <ng-template
     #contenido
     let-modal
+   
 >
-    <div class="modal-header">
+    <div class="modal-header"  *ngIf="details">
         <h4 class="modal-title">{{details.name}}</h4>
         <button
             class="close"
@@ -50,7 +51,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body"  *ngIf="details">
         <img
             src={{details.image}}
             width="32%"
