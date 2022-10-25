@@ -72,7 +72,33 @@
         
     </div>
     <h4 class="modal-title">Characters of the episodes</h4>
-    <div class="modal-body" style="display: flex;" *ngFor="let charact of charactersList" >
+    <div class="modal-body" >  
+        <p >
+            <button class="btn btn-primary"   type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Episode</button>
+          </p>
+          <div class="row" >
+            <div class="col">
+              <div class="collapse multi-collapse" id="multiCollapseExample1" *ngFor="let pos of newObjeto">
+                <div class="card card-body"  >
+                    <img
+                    src={{pos.image}}
+                    width="32%"
+                    height="32%"
+                    class="rounded-circle me-2"
+                >
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="collapse multi-collapse" id="multiCollapseExample2">
+                <div class="card card-body">
+                  Some placeholder content for the second collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <!-- <div class="modal-body" style="display: flex;" *ngFor="let charact of charactersList" >
        <div class="images">
         <img 
         src={{charact.image}}
@@ -98,7 +124,9 @@
         >
             Ok!
         </button>
-    </div>
+    </div> -->
+
+    
 </ng-template>
 
 <!-- <div class="modal-body"  >

@@ -10,10 +10,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SidebarComponent implements OnInit {
   characters!: Character[];
-  details!: Character;
+  // details!: Character;
+  details!: any;
+  newObjeto: any;
   charactersEpisodes!: Character[];
   origin!: Origin[];
   charactersList: CharacterList[] = [];
+  result : any[] = [];
+ 
 
   constructor(
     private characterService: CharacterService,
@@ -48,19 +52,145 @@ export class SidebarComponent implements OnInit {
       }
     );
   }
+  getEpisodeData(url: string) {
+    const episode = {
+      id: 1,
+      name: "",
+      characters: [],
+    }
+    return new Promise((resolve, reject) => {
+      this.getApiData(url)
+        .then((episodeData: any) => {
+          episode.id = episodeData.id;
+          episode.name = episodeData.name;
+          episode.characters = episodeData.characters;
+          resolve(episode)
+        })
+    })
+  }
+
+  getOrigin(url: string) {
+    const origin = {
+      name: "",
+      type: "",
+      dimension: "",
+    }
+    return new Promise((resolve, reject) => {
+      this.getApiData(url)
+        .then((originData: any) => {
+          origin.name = originData.name;
+          origin.type = originData.type;
+          origin.dimension = originData.dimension;
+          resolve(origin)
+        })
+    })
+  }
+
+  getCharacter(url: string){
+    const episode = {
+      origin: {
+        name: "",
+        type: "",
+        dimension: "",
+      },
+      id: 1,
+      image: "",
+      name: ""
+      
+    }
+    return new Promise((resolve, reject) => {
+      this.getApiData(url)
+        .then((characterData: any) => {
+          episode.image = characterData.image;
+          episode.name = characterData.name;
+          episode.id = characterData.id;
+          if (characterData.origin.url === '') {
+          const url= "https://rickandmortyapi.com/api/location/7"
+            return this.getOrigin(url)
+          }
+          return this.getOrigin(characterData.origin.url)
+        })
+        .then((origin: any) => {
+            episode.origin = origin;
+          //console.log("episode", episode.origin);
+          
+          resolve(episode)
+        })
+    })
+  }
+
+  number = 1;
+  getnumber(num: number){
+    this.number = num;
+  }
+
+
+  buildModal(data: any, character: any, num=4){
+    console.log("jajaj"+this.number)
+    const arrPromise = []
+    for (const url_episode of data.episode) {
+      arrPromise.push(this.getEpisodeData(url_episode))
+    }
+    Promise.all(arrPromise)
+    .then((response) => {
+      character.episodes = response;
+      let promises=[]
+      for (const epi of character.episodes) {
+        this.result.push(epi.id);
+        if (epi.id === num) {
+          for (const url_character of epi.characters) {
+            promises.push(this.getCharacter(url_character))
+           }
+        }
+      }
+     return Promise.all(promises)
+    })
+    .then((data)=>{
+      console.log(data)
+      console.log("id"+this.result)
+      this.newObjeto= data
+    })
+  }
+
+
   detailCharacter(contenido: any, id: number) {
     this.modal.open(contenido, { size: 'xl' });
+    this.result.length=0
     this.characterService.detail(id).subscribe(
       (data) => {
-        this.details = data;
+        this.details = {
+          image:data.image,
+          name:data.name,
+          status:data.status,
+          species:data.species,
+          type:data.type,
+          gender:data.gender,
+          url:data.url,
+          created:data.created,
+          episodes:[]
+        };
+        this.buildModal(data, this.details)
       },
       (err) => {
         console.log(err.message);
       }
     );
-    this.getCharactersEpisodes(id);
+    //this.getCharactersEpisodes(id);
     //this.getCharactersEpisode(id)
   }
+  // detailCharacter(contenido: any, id: number) {
+  //   this.modal.open(contenido, { size: 'xl' });
+  //   this.characterService.detail(id).subscribe(
+  //     (data) => {
+  //       this.details = data;
+  //     },
+  //     (err) => {
+  //       console.log(err.message);
+  //     }
+  //   );
+  //   this.getCharactersEpisodes(id);
+  //   //this.getCharactersEpisode(id)
+  // }
   getCharactersEpisode(id: number) {
     let characterEpisodes = {};
     this.characterService.detailCharacterEpisode(id).subscribe((data) => {
