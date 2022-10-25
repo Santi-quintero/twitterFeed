@@ -16,8 +16,7 @@ export class SidebarComponent implements OnInit {
   charactersEpisodes!: Character[];
   origin!: Origin[];
   charactersList: CharacterList[] = [];
-  result : any[] = [];
- 
+  episodes: any;
 
   constructor(
     private characterService: CharacterService,
@@ -119,14 +118,13 @@ export class SidebarComponent implements OnInit {
     })
   }
 
-  number = 1;
+ 
   getnumber(num: number){
-    this.number = num;
+    this.buildModal(this.episodes,this.details,num)
   }
 
 
-  buildModal(data: any, character: any, num=4){
-    console.log("jajaj"+this.number)
+  buildModal(data: any, character: any, num:any){
     const arrPromise = []
     for (const url_episode of data.episode) {
       arrPromise.push(this.getEpisodeData(url_episode))
@@ -136,8 +134,7 @@ export class SidebarComponent implements OnInit {
       character.episodes = response;
       let promises=[]
       for (const epi of character.episodes) {
-        this.result.push(epi.id);
-        if (epi.id === num) {
+        if (epi.id == num) {
           for (const url_character of epi.characters) {
             promises.push(this.getCharacter(url_character))
            }
@@ -147,7 +144,6 @@ export class SidebarComponent implements OnInit {
     })
     .then((data)=>{
       console.log(data)
-      console.log("id"+this.result)
       this.newObjeto= data
     })
   }
@@ -155,7 +151,6 @@ export class SidebarComponent implements OnInit {
 
   detailCharacter(contenido: any, id: number) {
     this.modal.open(contenido, { size: 'xl' });
-    this.result.length=0
     this.characterService.detail(id).subscribe(
       (data) => {
         this.details = {
@@ -169,7 +164,8 @@ export class SidebarComponent implements OnInit {
           created:data.created,
           episodes:[]
         };
-        this.buildModal(data, this.details)
+        this.episodes = data;
+        this.buildModal(data, this.details,1)
       },
       (err) => {
         console.log(err.message);
@@ -333,11 +329,6 @@ export class SidebarComponent implements OnInit {
         }
         this.charactersList = promises;
       })
-      .then((res)=>{
-       
-        // console.log(res)
-        // console.log(characterEpisodes)
-       })
     });
   }
 

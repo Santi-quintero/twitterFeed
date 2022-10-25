@@ -74,7 +74,16 @@
     <h4 class="modal-title">Characters of the episodes</h4>
     <div class="modal-body" >  
         <p >
-            <button class="btn btn-primary"   type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Episode</button>
+            <input
+            type="number"
+            id="search"
+            #number
+            (keyup)="getnumber(number.value)"
+            placeholder="Number episode"
+        >
+        <br>
+        <br>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Episode</button>
           </p>
           <div class="row" >
             <div class="col">
@@ -86,62 +95,17 @@
                     height="32%"
                     class="rounded-circle me-2"
                 >
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="collapse multi-collapse" id="multiCollapseExample2">
-                <div class="card card-body">
-                  Some placeholder content for the second collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                <h4>{{pos.name}}</h4>
+                <ul>
+                    <li>name: {{pos.origin.name}}</li>
+                    <li>dimension: {{pos.origin.dimension}}</li>
+                    <li>type: {{pos.origin.type}}</li>
+                </ul>
                 </div>
               </div>
             </div>
           </div>
     </div>
-    <!-- <div class="modal-body" style="display: flex;" *ngFor="let charact of charactersList" >
-       <div class="images">
-        <img 
-        src={{charact.image}}
-        class="rounded-circle me-2">
-      
-       </div>
-       <div class="contenido">
-        <ul  style="border-bottom: 1px solid rgb(176, 174, 174);">
-            <li>name:{{charact.name}}</li>
-            <li>type: {{charact.type}}</li>
-            <li>dimension: {{charact.type}}</li>
-        </ul>
-       </div>
-    </div>
-
-
-    <div class="modal-footer">
-
-        <button
-            type="button"
-            class="btn btn-success"
-            (click)="modal.close()"
-        >
-            Ok!
-        </button>
-    </div> -->
-
     
 </ng-template>
 
-<!-- <div class="modal-body"  >
-    <img *ngFor="let charact of charactersEpisodes"
-        src={{charact.image}}
-        width="10%"
-        height="10%"
-        class="rounded-circle me-2"
-    >
-   <!-- <strong>{{charact.name}}</strong> -->
-<!-- </div>
-<div  style="display: flex;  flex-direction: column; width: 45%;">
-    <ul *ngFor="let i of origin">
-        <li>name:{{i.name}}</li>
-        <li>type: {{i.type}}</li>
-        <li>dimension: {{i.dimension}}</li>
-    </ul>
-</div> --> 
