@@ -9,3 +9,7 @@ export interface User{
     description: string,
     estimation: number
 }
+export interface Provider {
+    message: string,
+    id: string,
+}

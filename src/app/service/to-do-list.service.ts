@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
-import { Task, User } from '../models/toDoList';
+import { Provider, Task, User } from '../models/toDoList';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +35,7 @@ export class ToDoListService {
       });
     });
   }
-  addUsuario(user: User) {
+  addUsuario(user: User){
     return new Promise((resolve, reject) => {
       this.http.post(`${this.API_URL}/user`, user).subscribe({
         next: (data) => {
@@ -58,7 +58,19 @@ export class ToDoListService {
         },
       });
     });
-    // return this.http.post(`${this.API_URL}`, to_do_list);
+  }
+
+  deleteTask(id: string, idTask: number){
+    return new Promise((resolve, reject) => {
+      this.http.delete(`${this.API_URL}/${id}/${idTask}`).subscribe({
+        next: (data) => {
+          resolve(data);
+        },
+        error: (err) => {
+          reject(err.message);
+        },
+      });
+    });
   }
 
   // deleteUsuario(id: string, idTask: number) {

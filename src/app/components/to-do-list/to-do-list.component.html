@@ -22,10 +22,10 @@
                         <input type="number" name="estimation"   [(ngModel)]="user.estimation" placeholder="estimation" class="form-control" autofocus>
                     </div>
                     <br>
-                    <button *ngIf="id.value === ''" class="btn btn-success btn-block" (click)="createUsuario()">
+                    <button *ngIf="currentUser.id === ''" class="btn btn-success btn-block" (click)="createUsuario()">
                        Add
                     </button>
-                    <button *ngIf="id.value !== ''" class="btn btn-success btn-block" (click)="createTask(id.value)">
+                    <button *ngIf="currentUser.id !==''" class="btn btn-success btn-block" (click)="createTask(currentUser.id)">
                         Add task
                      </button> 
                 </form>

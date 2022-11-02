@@ -28,12 +28,6 @@ export class ToDoListComponent implements OnInit {
     estimation: 0,
   };
 
-  task: Task = {
-    id: '',
-    description: '',
-    estimation: 0,
-  };
-
   constructor(private to_do_listService: ToDoListService,
     private modal: NgbModal,
     private toastr: ToastrService,
@@ -47,7 +41,6 @@ export class ToDoListComponent implements OnInit {
     this.to_do_listService.getRegisteredUsers()
     .then((data)=>{
       this.usuarios = data;
-      console.log(this.usuarios);
     })
   }
 
@@ -55,47 +48,38 @@ export class ToDoListComponent implements OnInit {
     console.log(this.user);
     this.to_do_listService.addUsuario(this.user)
     .then((res)=>{
-      console.log(res)
+      this.user1 = res
+      this.currentUser.id=this.user1.idUsuario
+      this.loggin(this.currentUser.id)
     });
-    // console.log(this.user);
-    // this.to_do_listService.saveUsuario(this.user).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //     this.getUser(this.user.id)
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
   }
 
-  createTask(id:string){
-    this.task={
-      id: id,
+  createTask(){
+    let addtask={
+      id:this.currentUser.id,
       description:this.user.description,
       estimation: this.user.estimation
     }
-    this.to_do_listService.addTask(this.task)
+    console.log(addtask)
+    this.to_do_listService.addTask(addtask)
     .then((res)=>{
-      console.log(res)
-     
+      this.user1=res
     })
   }
 
   loggin(id: string) {
-    this.currentUser.id = id
     this.to_do_listService.getUsuarioLogin(id)
     .then((res)=>{
       this.user1 =res
-      this.currentUser=id
+      this.currentUser.id=id
     })
   }
   deleteTask(id: string, idTask:number){
-    // this.to_do_listService.deleteUsuario(id,idTask).subscribe(
-    //   data=>{
-    //     console.log(data)
-    //   }
-    // )
+    this.to_do_listService.deleteTask(id, idTask)
+    .then((res)=>{
+      this.user1 =res
+      this.loggin(this.currentUser.id)
+    })
   }
 
   completedTask(id: string, idTask:number){
