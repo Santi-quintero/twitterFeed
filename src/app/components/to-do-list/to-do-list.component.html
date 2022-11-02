@@ -1,0 +1,106 @@
+<div class="container">
+    <br>
+    <br>
+    <form>
+        <input type="text" name="id" #id placeholder="nombre usuario" class="form-control" autofocus>
+        <br>
+        <button class="btn btn-success btn-block" (click)="loggin(id.value)">
+           Login
+        </button>
+    
+    </form>
+    <hr>
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+                <form >
+                    <div class="form-group">
+                        <textarea type="text" name="description" id="" [(ngModel)]="user.description" placeholder="description" class="form-control" autofocus></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="number" name="estimation"   [(ngModel)]="user.estimation" placeholder="estimation" class="form-control" autofocus>
+                    </div>
+                    <br>
+                    <button *ngIf="id.value === ''" class="btn btn-success btn-block" (click)="createUsuario()">
+                       Add
+                    </button>
+                    <button *ngIf="id.value !== ''" class="btn btn-success btn-block" (click)="createTask(id.value)">
+                        Add task
+                     </button> 
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h3>Por Hacer</h3>
+    <div class="table table-dark offset-md-4">
+        <thead>
+            <tr>
+                <th scope="col">id task</th>
+                <th scope="col">descripcion</th>
+                <th scope="col">estimation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of user1.task">
+                <td>{{task.id}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.estimation}}</td>
+                <td><button class="btn btn-outline-success" (click)="completedTask(user1.id,task.id)">listo</button></td>
+                <td><button class="btn btn-outline-danger" (click)="deleteTask(user1.id,task.id)">delete</button></td>
+                <td><button class="btn btn-outline-info" (click)="ngModal(contenido, task.id, user1.id)">editar</button></td>
+            </tr>
+        </tbody>
+    </div>
+    <hr>
+    <h3>Finalizadas</h3>
+    <div class="table table-dark offset-md-4">
+        <thead>
+            <tr>
+                <th scope="col">idTask</th>
+                <th scope="col">descripcion</th>
+                <th scope="col">estimation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of user1.endTask">
+                <td>{{task.id}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.estimation}}</td>
+                <td><button class="btn btn-outline-success" (click)="pendingTask(user1.id,task.id)">activar</button></td>
+
+            </tr>
+        </tbody>
+    </div>
+</div>
+
+
+
+
+<ng-template
+    #contenido
+    let-modal
+   
+>
+<div class="col-md-4 offset-md-4">
+    <div class="card">
+        <div class="card-body">
+            <form >
+                <div class="form-group">
+                    <textarea type="text" name="description" id=""  [(ngModel)]="updateUser.description"  placeholder="description" class="form-control" autofocus></textarea>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="number" name="estimation"  [(ngModel)]="updateUser.estimation"  placeholder="estimation" class="form-control" autofocus>
+                </div>
+                <br>
+                <button class="btn btn-success btn-block" (click)="updateUsuario(updateUser.id, updateUser.idTask)">
+                   Add
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+</ng-template>

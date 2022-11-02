@@ -10,21 +10,32 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { HttpClientModule } from  '@angular/common/http'
 import {FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+
+import { ToDoListService } from './service/to-do-list.service';
+import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
+import  {  ToastrModule  }  from  'ngx-toastr' ;
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    SidebarComponent
+    SidebarComponent,
+    ToDoListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), 
+   
   ],
-  providers: [],
+  providers: [
+    ToDoListService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
