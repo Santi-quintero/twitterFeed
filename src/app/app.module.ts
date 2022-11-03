@@ -15,6 +15,7 @@ import { ToDoListService } from './service/to-do-list.service';
 import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
 import  {  ToastrModule  }  from  'ngx-toastr' ;
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
     NgbModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), 
+    ReactiveFormsModule
    
   ],
   providers: [

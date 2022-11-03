@@ -30,7 +30,7 @@ export class ToDoListService {
           resolve(data);
         },
         error: (err) => {
-          reject(err.message);
+          reject(err.message)
         },
       });
     });
@@ -60,7 +60,7 @@ export class ToDoListService {
     });
   }
 
-  deleteTask(id: string, idTask: number){
+  deleteTask(id: string, idTask: string){
     return new Promise((resolve, reject) => {
       this.http.delete(`${this.API_URL}/${id}/${idTask}`).subscribe({
         next: (data) => {
@@ -72,29 +72,41 @@ export class ToDoListService {
       });
     });
   }
+  updateTask(id: string, idTask: string, task: any){
+    return new Promise((resolve, reject) => {
+      this.http.put<any>(`${this.API_URL}/${id}/${idTask}`, task).subscribe({
+        next: (data) => {
+          resolve(data);
+        },
+        error: (err) => {
+          reject(err.message);
+        },
+      });
+    });
+  }
+  completedTask(id: string, idTask: string, task: Task){
+    return new Promise((resolve, reject) => {
+      this.http.patch(`${this.API_URL}/completed/${id}/${idTask}`, task).subscribe({
+        next: (data) => {
+          resolve(data);
+        },
+        error: (err) => {
+          reject(err.message);
+        },
+      });
+    });
+  }
+  pedingTask(id: string, idTask: string, task: Task){
+    return new Promise((resolve, reject) => {
+      this.http.patch(`${this.API_URL}/pending/${id}/${idTask}`, task).subscribe({
+        next: (data) => {
+          resolve(data);
+        },
+        error: (err) => {
+          reject(err.message);
+        },
+      });
+    });
+  }
 
-  // deleteUsuario(id: string, idTask: number) {
-  //   return this.http.delete(`${this.API_URL}/${id}/${idTask}`);
-  // }
-
-  // updateUsuario(
-  //   id: string,
-  //   idTask: number,
-  //   to_do_list: ToDoList
-  // ): Observable<any> {
-  //   return this.http.put<any>(`${this.API_URL}/${id}/${idTask}`, to_do_list);
-  // }
-
-  // completedTask(id: string, idTask: number, to_do_list: ToDoList) {
-  //   return this.http.patch(
-  //     `${this.API_URL}/completed/${id}/${idTask}`,
-  //     to_do_list
-  //   );
-  // }
-  // pedingTask(id: string, idTask: number, to_do_list: ToDoList) {
-  //   return this.http.patch(
-  //     `${this.API_URL}/pending/${id}/${idTask}`,
-  //     to_do_list
-  //   );
-  // }
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit,  } from '@angular/core';
+import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -11,111 +13,120 @@ import { ToDoListService } from 'src/app/service/to-do-list.service';
   styleUrls: ['./to-do-list.component.css'],
 })
 export class ToDoListComponent implements OnInit {
-  usuarios: any = [];
-  currentUser:any={
-    id:''
-  }
 
-  user1: any=[]
-  updateUser:any={
+  description = new FormControl('', [Validators.required]);
+  estimation = new FormControl('', [Validators.required]);
+
+  usuarios: any = [];
+  currentUser: any = {
     id: '',
-    idTask: 0,
-    description: '',
-    estimation: 0,
-  }
+  };
+  task: Task;
+
+  user1: any = [];
+  updateUser: any = {
+    id: '',
+    idTask: '',
+  };
+
+  
   user: User = {
     description: '',
     estimation: 0,
   };
 
-  constructor(private to_do_listService: ToDoListService,
+  constructor(
+    private to_do_listService: ToDoListService,
     private modal: NgbModal,
     private toastr: ToastrService,
-    private router: Router) {}
+  ) {}
 
   ngOnInit(): void {
     this.getUsersLoggedIn();
-    console.log(this.user1)
+
   }
   getUsersLoggedIn() {
-    this.to_do_listService.getRegisteredUsers()
-    .then((data)=>{
+    this.to_do_listService.getRegisteredUsers().then((data) => {
       this.usuarios = data;
-    })
-  }
-
-  createUsuario() {
-    console.log(this.user);
-    this.to_do_listService.addUsuario(this.user)
-    .then((res)=>{
-      this.user1 = res
-      this.currentUser.id=this.user1.idUsuario
-      this.loggin(this.currentUser.id)
     });
   }
 
-  createTask(){
-    let addtask={
-      id:this.currentUser.id,
-      description:this.user.description,
-      estimation: this.user.estimation
+  createUsuario(description:string, estimation:number) {
+    this.user={
+      description:description,
+      estimation: estimation
     }
-    console.log(addtask)
-    this.to_do_listService.addTask(addtask)
-    .then((res)=>{
-      this.user1=res
-    })
+    this.to_do_listService.addUsuario(this.user).then((res) => {
+      this.user1 = res;
+      this.currentUser.id = this.user1.idUsuario;
+      this.loggin(this.currentUser.id);
+    });
+  }
+
+  createTask(description:string, estimation:number) {
+    this.task={
+      id: this.currentUser.id,
+      description: description,
+      estimation: estimation
+    }
+    this.to_do_listService.addTask(this.task).then((res) => {
+      this.user1 = res;
+      console.log(res)
+      this.loggin(this.currentUser.id);
+    });
+   
   }
 
   loggin(id: string) {
-    this.to_do_listService.getUsuarioLogin(id)
-    .then((res)=>{
-      this.user1 =res
-      this.currentUser.id=id
-    })
+    this.to_do_listService.getUsuarioLogin(id).then((res) => {
+      this.user1 = res;
+      this.currentUser.id = id;
+   
+    });
   }
-  deleteTask(id: string, idTask:number){
-    this.to_do_listService.deleteTask(id, idTask)
-    .then((res)=>{
-      this.user1 =res
-      this.loggin(this.currentUser.id)
-    })
-  }
-
-  completedTask(id: string, idTask:number){
-    // this.to_do_listService.completedTask(id,idTask, this.user1).subscribe(
-    //   data=>{
-    //     console.log(data)
-    //   }
-    // )
-  }
-  pendingTask(id: string, idTask:number){
-    // this.to_do_listService.pedingTask(id,idTask, this.user1).subscribe(
-    //   data=>{
-    //     console.log(data)
-    //   }
-    // )
+  deleteTask(id: string, idTask: string) {
+    this.to_do_listService.deleteTask(id, idTask).then((res) => {
+      this.user1 = res;
+      this.loggin(this.currentUser.id);
+    });
   }
 
-  ngModal(contenido, idTask, id){
-    this.modal.open(contenido, {size: 'sl'});
-    this.updateUser.id = id
-    this.updateUser.idTask=idTask
-    // this.updateUser={
-    //   id: id,
-    //   idTask: idTask
-    // }
+  completedTask(id: string, idTask: string) {
+    this.to_do_listService.completedTask(id, idTask, this.user1).then((res) => {
+      this.user1 = res;
+      this.loggin(this.currentUser.id);
+    });
   }
-  updateUsuario(id: string, idTask:number){
-    // delete this.updateUser.id
-    // delete this.updateUser.idTask
-    // this.to_do_listService.updateUsuario(id, idTask,this.updateUser).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
+  pendingTask(id: string, idTask: string) {
+    this.to_do_listService.pedingTask(id, idTask, this.user1).then((res) => {
+      this.user1 = res;
+      this.loggin(this.currentUser.id);
+    });
   }
+
+  ngModal(contenido,  id, idTask) {
+    this.modal.open(contenido, { size: 'sl' });
+    this.updateUser = {
+      id: id,
+      idTask: idTask,
+    };
+  }
+  updateUsuario(description: string, estimation: string) {
+    let obj={
+      description: description,
+      estimation: estimation
+    }
+    this.to_do_listService
+      .updateTask(this.updateUser.id, this.updateUser.idTask, obj)
+      .then((res) => {
+        this.user1 = res;
+        this.loggin(this.currentUser.id);
+      });
+  }
+
+  back() {
+    location.reload();
+  }
+
+  
 }
