@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
-import { Provider, Task, User } from '../models/toDoList';
+import { Task, User } from '../models/toDoList';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class ToDoListService {
   API_URL = environment.URLTo_do_List;
   constructor(private http: HttpClient) {}
 
-  getRegisteredUsers(){
+  getRegisteredUsers() {
     return new Promise((resolve, reject) => {
       this.http.get(this.API_URL).subscribe({
         next: (data) => {
@@ -30,12 +30,12 @@ export class ToDoListService {
           resolve(data);
         },
         error: (err) => {
-          reject(err.message)
+          reject(err.message);
         },
       });
     });
   }
-  addUsuario(user: User){
+  addUsuario(user: User) {
     return new Promise((resolve, reject) => {
       this.http.post(`${this.API_URL}/user`, user).subscribe({
         next: (data) => {
@@ -60,7 +60,7 @@ export class ToDoListService {
     });
   }
 
-  deleteTask(id: string, idTask: string){
+  deleteTask(id: string, idTask: string) {
     return new Promise((resolve, reject) => {
       this.http.delete(`${this.API_URL}/${id}/${idTask}`).subscribe({
         next: (data) => {
@@ -72,7 +72,7 @@ export class ToDoListService {
       });
     });
   }
-  updateTask(id: string, idTask: string, task: any){
+  updateTask(id: string, idTask: string, task: any) {
     return new Promise((resolve, reject) => {
       this.http.put<any>(`${this.API_URL}/${id}/${idTask}`, task).subscribe({
         next: (data) => {
@@ -84,29 +84,32 @@ export class ToDoListService {
       });
     });
   }
-  completedTask(id: string, idTask: string, task: Task){
+  completedTask(id: string, idTask: string, task: Task) {
     return new Promise((resolve, reject) => {
-      this.http.patch(`${this.API_URL}/completed/${id}/${idTask}`, task).subscribe({
-        next: (data) => {
-          resolve(data);
-        },
-        error: (err) => {
-          reject(err.message);
-        },
-      });
+      this.http
+        .patch(`${this.API_URL}/completed/${id}/${idTask}`, task)
+        .subscribe({
+          next: (data) => {
+            resolve(data);
+          },
+          error: (err) => {
+            reject(err.message);
+          },
+        });
     });
   }
-  pedingTask(id: string, idTask: string, task: Task){
+  pedingTask(id: string, idTask: string, task: Task) {
     return new Promise((resolve, reject) => {
-      this.http.patch(`${this.API_URL}/pending/${id}/${idTask}`, task).subscribe({
-        next: (data) => {
-          resolve(data);
-        },
-        error: (err) => {
-          reject(err.message);
-        },
-      });
+      this.http
+        .patch(`${this.API_URL}/pending/${id}/${idTask}`, task)
+        .subscribe({
+          next: (data) => {
+            resolve(data);
+          },
+          error: (err) => {
+            reject(err.message);
+          },
+        });
     });
   }
-
 }

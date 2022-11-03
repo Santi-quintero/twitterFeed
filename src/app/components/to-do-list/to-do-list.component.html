@@ -1,7 +1,7 @@
 <div class="container">
     <br>
     <br>
-    <form >
+    <form>
         <input
             type="text"
             name="id"
@@ -30,29 +30,29 @@
     <div class="col-md-4 offset-md-4">
         <div class="card">
             <div class="card-body">
-                <form >
+                <form [formGroup]="contactForm">
                     <div class="form-group">
                         <textarea
                             type="text"
+                            id="description"
                             name="description"
-                            [formControl]="description"
                             #descripcion
                             placeholder="description"
                             class="form-control"
+                            formControlName="description"
                         ></textarea>
-                        
-                        <small *ngIf="description.hasError('required') && description.dirty">El campo es requerido</small>
+
                     </div>
                     <br>
                     <div class="form-group">
                         <input
-                        
                             type="number"
+                            id="estimation"
                             name="estimation"
                             #estimacion
-                            [formControl]="estimation"
                             placeholder="estimation"
                             class="form-control"
+                            formControlName="estimation"
                             autofocus
                         >
                     </div>
@@ -61,11 +61,8 @@
                         *ngIf="currentUser.id === ''"
                         class="btn btn-success btn-block"
                         (click)="createUsuario(descripcion.value,estimacion.value)"
-                        disabled
                         type="reset"
-                        [disabled]="description.invalid"
-                        [disabled]="estimation.invalid"
-
+                        [disabled]="contactForm.invalid"
                     >
                         Add
                     </button>
@@ -84,7 +81,7 @@
                         class="btn btn-success btn-block"
                         (click)="createTask(descripcion.value,estimacion.value)"
                         type="submit"
-                        [disabled]="description.invalid"
+                        [disabled]="contactForm.invalid"
                     >
                         Add task
                     </button>
@@ -102,13 +99,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let task of user1.task">
+            <tr *ngFor="let task of responseUser.task">
                 <td>{{task.description}}</td>
                 <td>{{task.estimation}}</td>
                 <td>
                     <button
                         class="btn btn-outline-success"
-                        (click)="completedTask(user1.id,task.id)"
+                        (click)="completedTask(responseUser.id,task.id)"
                     >
                         listo
                     </button>
@@ -116,7 +113,7 @@
                 <td>
                     <button
                         class="btn btn-outline-danger"
-                        (click)="deleteTask(user1.id,task.id)"
+                        (click)="deleteTask(responseUser.id,task.id)"
                     >
                         delete
                     </button>
@@ -124,7 +121,7 @@
                 <td>
                     <button
                         class="btn btn-outline-info"
-                        (click)="ngModal(contenido,  user1.id,task.id)"
+                        (click)="ngModal(contenido,  responseUser.id,task.id)"
                     >
                         editar
                     </button>
@@ -142,13 +139,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let task of user1.endTask">
+            <tr *ngFor="let task of responseUser.endTask">
                 <td>{{task.description}}</td>
                 <td>{{task.estimation}}</td>
                 <td>
                     <button
                         class="btn btn-outline-success"
-                        (click)="pendingTask(user1.id,task.id)"
+                        (click)="pendingTask(responseUser.id,task.id)"
                     >
                         activar
                     </button>
@@ -163,21 +160,20 @@
     #contenido
     let-modal
 >
-    <div class="col-md-4 offset-md-4">
+    <div class="col-md-6 offset-md-3">
         <div class="card">
             <div class="card-body">
-                <form #login="ngForm" (ngSubmit)="completeLogin(login)">
+                <form [formGroup]="contactForm">
                     <div class="form-group">
                         <textarea
                             type="text"
                             name="description"
                             id="description"
-                            [formControl]="description"
                             placeholder="description"
                             class="form-control"
                             autofocus
-                         
-                            
+                            #description
+                            formControlName="description"
                         ></textarea>
                     </div>
                     <br>
@@ -185,10 +181,11 @@
                         <input
                             type="number"
                             name="estimation"
-                              [formControl]="estimation"
+                            #estimation
                             placeholder="estimation"
                             class="form-control"
                             autofocus
+                            formControlName="estimation"
                         >
                     </div>
                     <br>
@@ -196,11 +193,10 @@
                         class="btn btn-success btn-block"
                         (click)="updateUsuario(description.value, estimation.value)"
                         type="reset"
-                        [disabled]="estimation.invalid"
-                        [disabled]="description.invalid"
                         id="btn"
+                        [disabled]="contactForm.invalid"
                     >
-                       Update
+                        Update
                     </button>
                 </form>
             </div>
