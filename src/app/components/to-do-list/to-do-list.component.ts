@@ -59,9 +59,6 @@ export class ToDoListComponent implements OnInit {
       this.usuarios = data;
     });
   }
-  onSubmit() {
-    console.log('hola');
-  }
 
   createUsuario(description: string, estimation: number) {
     this.user = {

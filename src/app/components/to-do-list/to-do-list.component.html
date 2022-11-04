@@ -12,8 +12,10 @@
         >
         <br>
         <button
+         *ngIf="currentUser.id ===''"
             class="btn btn-success btn-block"
             (click)="loggin(id.value)"
+
         >
             Login
         </button>
